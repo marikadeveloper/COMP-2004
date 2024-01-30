@@ -1,4 +1,4 @@
-# Quiz 1 module 2 solutions
+# Quiz 1 module 2 examples
 
 ## Example 1
 
