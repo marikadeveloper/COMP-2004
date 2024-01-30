@@ -1,3 +1,5 @@
+# Quiz 1 module 2 solutions
+
 ## Example 1
 
 ```sum = 0;
