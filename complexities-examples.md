@@ -2,42 +2,37 @@
 
 ## Example 1
 
-```sum = 0;
+```c
+sum = 0; // O(1)
 
-/*1*/ for (i = 0; i < n; i++)
-/*2*/   for (j = 0; j < i*i; j++)
-/*3*/     if (j % i == 0)
-/*4*/       for (k = 0; k < j; k++)
-/*5*/         sum ++;
-/*6*/     else
-/*7*/       / * do nothing – this is O(1)*/
+for (i = 0; i < n; i++) // O(n)
+  for (j = 0; j < i*i; j++) // O(n^2)
+    if (j % i == 0) // this is evaluated n^2 times
+    // how many times is the if block condition verified? n^2/n = n times
+      for (k = 0; k < j; k++)
+        sum ++;
+    else
+      // how many times else block happens? n^2 - n times (subtract n from n^2 (j-loop))
+      // do nothing
 
 ```
 
-To help us understand, let’s add a dummy else condition with the for loop.
-Let’s start from the middle for-j loop, its size is n\*n = n<sup>2</sup> (The ‘n’ comes from the worst case value of ‘i’ in
-the outer i-loop).
+O(1) + O(n* O(n(if block complexity) + (n^2-n) (else block time complexity)))
+= O(1) + O(n* [n(n^2) + (n^2-n)1])
+= O(1) + O(n\* [n^3 + n^2 - n])
+= O(1) + O(n^4 + n^3 - n^2)
+= O(1) + O(n^4) - by addition rule of Big-O
+= **O(n^4)**
 
-So, the condition in line 3, which has time complexity O(1), is evaluated n<sup>2</sup> times.
+### Why is the if block condition verified n^2/n times?
 
-Now, let us see how these n<sup>2</sup> iterations are divided inside the body of the j-loop **due to the if condition on line 3**:
-
-- line 4-5 is executed n times. This condition is true only when j is a multiple of i.
-  In the middle loop, j goes from 0 to i\*i-1. The number of multiples of i in this range is (i\*i) / i, which simplifies to i.
-  So, for each iteration of the middle loop, the innermost loop (inside the if statement) is executed 'i' times.
-  More on **js example of multiples...** section;
-- line 7 is executed (n<sup>2</sup>-n) times (because you subtract the running time of line 4-5 that is n)
-
-So, the n<sup>2</sup> size of the for-j loop is divided as:
-_n \* (line 4 - 5 time complexity) + (n<sup>2</sup> - n) \* (line 7 complexity)._
-
-Now, substitute the time complexities of lines 4-5 and line 7 in the above expression.
-This will give us:
-n \* (n<sup>2</sup>) + (n<sup>2</sup>-n) \* (1)
-= n<sup>3</sup> + n<sup>2</sup>-n
-= O(n<sup>3</sup>)
-Finally, multiply the last expression with the outer i-loop size to get:
-n \* O(n<sup>3</sup>) = O(n<sup>4</sup>).
+Suppose n = 5
+What are the values that j goes through? j is going from 1 through n^2, that is _1 through 25_.
+What is the value of i (in worst case) inside j-loop? i's worst case value is n, that is _5_.
+Values of j: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15...18,19,20,21...25
+i:5
+When is j modulo i == 0? When j = 5, 10, 15, 20, 25... So 5 times.
+**In general, there are n multiples of n between 1 and n^2. That's why j modulo i == 0 for n times.**
 
 ### Js example of multiples of a number in given range
 
@@ -70,70 +65,70 @@ console.log(
 
 ## Example 2
 
-```
+```c
 sum = 0;
 
-for (i = 0; i < n ; i++) # O(n)
-    sum++;
+for (i = 0; i < n ; i++) // O(n)
+    sum++; // O(1)
 ```
 
-So we have O(n)
+**O(n)**
 
 ---
 
 ## Example 3
 
-```
-sum = 0;
+```c
+sum = 0; // O(1)
 
-for ( i = 0; i < n; i++) # O(n)
-    for ( j = 0; j < i * i; j++ ) # O(n^2)
-        for ( k = 0; k < j; k++ ) # O(n^2)
-            sum++; # O(1)
+for ( i = 0; i < n; i++) // O(n)
+    for ( j = 0; j < i * i; j++ ) // O(n^2)
+        for ( k = 0; k < j; k++ ) // O(n^2)
+            sum++; // O(1)
 ```
 
-So we have O(n^5)
+**O(n^5)**
 
 ---
 
 ## Example 4
 
-```
+```c
 sum = 0;
 
-for (i = 0; i < n ; i++) # O(n)
-    for (j = 0; j < n ; j++) # O(n)
-        sum++;
+for (i = 0; i < n ; i++) // O(n)
+    for (j = 0; j < n ; j++) // O(n)
+        sum++; // O(1)
 ```
 
-So we have O(n^2)
+**O(n^2)**
 
 ---
 
 ## Example 5
 
-```
+```c
 sum = 0;
 
-for ( i = 0; i < n; i++ ) # O(n)
-    for ( j = 0; j < i; j++ ) # this is O(n) because i at worst case is n
-        sum++;
+for ( i = 0; i < n; i++ ) // O(n)
+    for ( j = 0; j < i; j++ ) // this is O(n) because i at worst case is n
+        sum++; // O(1)
 ```
 
-So we have O(n^2)
+**O(n^2)**
 
 ---
 
 ## Example 6
 
-```
-sum = 0;
+```c
+sum = 0; // O(1)
 
-for ( i = 0; i < n; i++ ) # O(n)
-    for ( j = 0; j < n * n; j++ ) # O(n^2)
-        sum++;
+for ( i = 0; i < n; i++ ) // O(n)
+    for ( j = 0; j < n * n; j++ ) // O(n^2)
+        sum++; // O(1)
 ```
 
-So we have O(n^3)
+**O(n^3)**
 
 ---
