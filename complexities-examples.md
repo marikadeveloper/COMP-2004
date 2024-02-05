@@ -1,3 +1,31 @@
+# General rules
+
+## Constants get absorbed
+
+O(5) = O(1)
+O(2N) = O(N)
+0(1000 N^2) = O(N^2)
+
+## Addition Rule
+
+T1(N) = O(f1(N)), T2(N) = O(f2(N))
+T1(N) + T2(N) = O(max(f1(N), f2(N)))
+T1(N) = O(N^2), T2(N) = O(N log N)
+T1(N) + T2(N) = O(N^2)
+
+## Multiplication Rule
+
+T1(N) = O(f1 (N)), T2(N) = O(f2(N))
+T1(N) _ T2(N) = O(T1(N) _ T2(N))
+T1(N) = O(N^2), T2(N) = O(N log N)
+T1(N) _ T2(N) = O(N^3 log N)
+T1(N) = O(N), T2(N) = O(1)
+T1(N) _ T2(N) = O(N*1) = O(N)
+T1(N) = O(N^4), T2(N). = O(N^2)
+1(N) *T2(N) = O(N^4 \* N^2) = O(N^6)
+
+N is always a positive integer - N is the number of inputs to an algorithm
+
 # Quiz 1 module 2 examples
 
 ## Example 1
