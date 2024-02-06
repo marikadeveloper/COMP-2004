@@ -219,6 +219,8 @@ through a<sub>4</sub>).
 
 On which consecutive days should you go to the restaurant so that you have the most coupon value remaining at the end of the week?
 
+... TODO
+
 # Quiz 1 module 2 examples
 
 ## Example 1
