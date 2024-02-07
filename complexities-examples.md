@@ -200,26 +200,119 @@ Runtime: O(N^2) + max(O(1), O(N))
 
 # Algorithm Analysis
 
-## Maximum subsequence sum problem
+## Binary search algorithm
 
-Given (possibly negative) integers a<sub>1</sub>, a<sub>2</sub>,...,a<sub>n</sub>,
-find the maximum value of the sum of the values from i to j of a<sub>k</sub>.
-(For convenience, the maximum subsequence sum is 0 if all the integers are negative.)
+Input:
 
-Example: For input -2, 11, -4, 13, -5, -2, -1 the answer is 20 (a<sub>2</sub>
-through a<sub>4</sub>).
+- A: Sorted array of N integers
+- X: Integer to search for inside A
 
-### Maximum subsequence sum problem example
+Return:
+Index of X inside A, if found
+-1, if not found
 
-- You want to have lunch at a restaurant for some number of consecutive days next week.
-- On some days, the restaurant gives free meal coupons, but on other days you must pay for the food
-- The restaurant has published the coupon values (positive numbers) and prices (negative numbers, for non-coupon days) for the week:
+```c
+int BinarySearch( const int A[ ], int X, int N ){
+  int Low, Mid, High;
 
-[10, -8, 5, -6, 15, -20, 5]
+  Low = 0; High = N - 1;
 
-On which consecutive days should you go to the restaurant so that you have the most coupon value remaining at the end of the week?
+  while( Low <= High ) {
+    Mid = ( Low + High ) / 2;
 
-... TODO
+    if( A[ Mid ] < X )
+      Low = Mid + 1;
+    else if( A[ Mid ] > X )
+      High = Mid - 1;
+    else
+      return Mid; /* Found */
+  }
+  return -1; /* NotFound */
+}
+```
+
+At each iteration, the size of the searched array gets **halved**.
+
+Start with N = 2<sup>k</sup>
+Problem size: N
+At each step, problem size gets halved:
+N, N/2, N/4, N/8, ... , 1
+
+How many steps?
+k steps
+where, k = log<sub>2</sub> N
+
+**Time Complexity of Binary Search is O(log<sub>2</sub> N)**
+
+## Another log time complexity algorithm
+
+```c
+int foo(int N){
+  for (int i = 1, i <= N; i*=2)
+    a++;
+}
+```
+
+Assume N = 2<sup>k</sup>
+At each iteration, I gets doubled:
+1, 2, 4, 8, ... , 2<sup>k</sup>
+
+How many steps?
+k steps
+where, k = log<sub>2</sub> N
+
+**Time Complexity: O(log<sub>2</sub> N)**
+
+## Another log time complexity algorithm
+
+```c
+int foo(int N){
+  for (int i = 1, i <= N; i*=3)
+    a++;
+}
+```
+
+Assume N = 3<sup>k</sup>
+At each iteration, I gets
+doubled:
+1, 3, 9, 27, ... , 3<sup>k</sup>
+
+How many steps?
+k steps
+where, k = log<sub>3</sub> N
+= log<sub>2</sub> N / log<sub>2</sub> 3
+= c log<sub>2</sub> N
+
+**Time Complexity: O(log<sub>2</sub> N)**
+
+## Yet another log time complexity algorithm
+
+```c
+long int pow(long int X, int N ){
+  if ( N == 0 )
+    return 1;
+  if ( N == 1 )
+    return X;
+  if ( N % 2 == 0 ) // N is even
+    return pow( X * X, N / 2 );
+  else
+    return pow( X * X, N / 2 ) * X;
+}
+```
+
+Main idea:
+x<sup>N</sup> = (x<sup>2</sup> )<sup>N/2</sup> , if n even
+x<sup>N</sup> = x(x<sup>2</sup> )<sup>N/2</sup> , if n odd
+
+At each iteration:
+x<sup>N</sup> = (x<sup>2</sup> )<sup>N/2</sup>
+x<sup>N/2</sup> = (x<sup>2</sup> )<sup>N/4</sup>
+x<sup>N/4</sup> = (x<sup>2</sup> )<sup>N/8</sup>
+...
+x<sup>2</sup> = (x<sup>2</sup> )<sup>1</sup>
+x<sup>1</sup> = x
+
+**Time Complexity: O(log<sub>2</sub> N)**
 
 # Quiz 1 module 2 examples
 
