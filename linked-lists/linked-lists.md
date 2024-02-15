@@ -91,7 +91,7 @@ struct Node {
 };
 ```
 
-### List convenient methods code
+### List methods code
 
 `IsEmpty` - returns 1 if the list is empty, 0 otherwise
 
@@ -148,5 +148,58 @@ void Delete(ElementType X, List L) {
     P->Next = TmpCell->Next; // make the previous node point to the node after the one we want to delete
     free(TmpCell); // free the memory of the node we want to delete
   }
+}
+```
+
+`Insert` - inserts after the position p
+
+```c
+void Insert(ElementType X, List L, Position P) {
+  Position TmpCell;
+  TmpCell = malloc(sizeof(struct Node)); // allocate memory for the new node
+
+  if (TmpCell == NULL) {
+    printf("Out of space");
+  }
+
+  TmpCell->Element = X; // set the data part of the new node
+  TmpCell->Next = P->Next; // make the new node point to the node after the position p
+  P->Next = TmpCell; // make the position p point to the new node
+}
+```
+
+`DeleteList` - deletes the list
+
+```c
+void DeleteList(List L) {
+  Position P, Tmp;
+
+  P = L->Next; // list is the header node, so the first node is header->next
+  L->Next = NULL; // make the header node point to NULL
+  while (P != NULL) {
+    Tmp = P->Next; // save the next node in a temporary variable
+    free(P); // free the memory of the current node
+    P = Tmp; // move to the next node
+  }
+
+  free(L); // free the memory of the header node
+}
+```
+
+`MakeEmpty` - makes the list empty
+
+```c
+List MakeEmpty(List L) {
+  if (L != NULL) {
+    DeleteList(L); // delete the list
+  }
+
+  L = malloc(sizeof(struct Node)); // allocate memory for the header node
+  if (L == NULL) {
+    printf("Out of space");
+  }
+
+  L->Next = NULL; // make the header node point to NULL
+  return L;
 }
 ```
