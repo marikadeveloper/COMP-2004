@@ -203,3 +203,39 @@ List MakeEmpty(List L) {
   return L;
 }
 ```
+
+## Doubly Linked List
+
+A doubly linked list is a linked list that has two references, one to the next node and one to the previous node.
+The first node's previous reference points to NULL, the last node's next reference points to NULL.
+
+This increases space requirements (doubles the n. of pointers) and doubles cost of insertions and deletions.
+
+It simplifies the implementation of deletion because you do not need to calculate pointers to the previous node using FindPrevious method.
+
+### Node
+
+```c
+typedef int ElementType;
+
+struct Node;
+
+typedef struct Node *PtrToDoubleNode;
+typedef PtrToDoubleNode List;
+typedef PtrToDoubleNode Position;
+
+struct Node {
+  ElementType Element;
+  Position Next;
+  Position Prev;
+};
+```
+
+## Circularly Linked List
+
+A circularly singly linked list is a linked list where the last node points back to the first node.
+Used for round-robin scheduling, for example.
+
+Most likely a singly linked list
+
+- need to adjust next pointer of last node while inserting and deleting from first or last position
