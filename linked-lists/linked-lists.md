@@ -77,9 +77,9 @@ struct Node {
 This is the list node code, refined:
 
 ```c
-typedef int ElementType; // declare type ElementType as int, this is the type of the data part of the node
+typedef int ElementType; // declare type ElementType as int, this is the type of the data part of the node; this is clean code because we can change the type of the data part of the node by changing only one line of code
 
-struct Node;
+struct Node; // this tells the compiler that there is a struct called Node, but we don't know what it looks like yet
 
 typedef struct Node *PtrToNode; // declare PtrToNode as a "pointer to a Node"
 typedef PtrToNode List; // declare List as "pointer to a Node" type, because the list is a pointer to the header node
@@ -89,4 +89,64 @@ struct Node {
   ElementType Element; // data part of the node is of type ElementType (int in this case)
   Position Next; // reference part of the node is a pointer to the next node
 };
+```
+
+### List convenient methods code
+
+`IsEmpty` - returns 1 if the list is empty, 0 otherwise
+
+```c
+int IsEmpty(List L) {
+  return L->Next == NULL;  // list is the header node, so the first node is header->next
+}
+```
+
+`IsLast` - returns 1 if the position is the last position in the list, 0 otherwise
+
+```c
+int IsLast(Position P) {
+  return P->Next == NULL;
+}
+```
+
+`Find` - returns the position of the first occurrence of x in the list, NULL if not found
+
+```c
+Position Find(ElementType X, List L) {
+  Position P;
+
+  P = L->Next; // list is the header node, so the first node is header->next
+  while (P != NULL && P->Element != X) {
+    P = P->Next;
+  }
+
+  return P;
+}
+```
+
+`Delete` - deletes the first occurrence of x from the list
+
+```c
+Position FindPrevious(ElementType X, List L) {
+  Position P;
+
+  P = L; // we start from L and not from L->Next because we want to find the previous node to the one we want to delete, that can be the first node
+  while (P->Next != NULL && P->Next->Element != X) { // we check P->Next->Element because we want to find the previous node to the one we want to delete
+    P = P->Next;
+  }
+
+  return P;
+}
+
+void Delete(ElementType X, List L) {
+  Position P, TmpCell;
+
+  P = FindPrevious(X, L); // find the previous node to the one we want to delete
+
+  if (!IsLast(P)) { // we want to delete the node only if it exists
+    TmpCell = P->Next; // save the node we want to delete in a temporary variable
+    P->Next = TmpCell->Next; // make the previous node point to the node after the one we want to delete
+    free(TmpCell); // free the memory of the node we want to delete
+  }
+}
 ```
