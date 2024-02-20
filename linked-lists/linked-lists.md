@@ -239,3 +239,93 @@ Used for round-robin scheduling, for example.
 Most likely a singly linked list
 
 - need to adjust next pointer of last node while inserting and deleting from first or last position
+
+## Implementing Polynomial using Lists
+
+A polynomial is a mathematical expression that is the sum of a number of terms, each term is a constant multiplied by a variable raised to a power.
+
+f(x) = a<sub>0</sub> + a<sub>1</sub>x + a<sub>2</sub>x<sup>2</sup> + ... + a<sub>n</sub>x<sup>n</sup>
+
+Operations: adding or multiplying two polynomials
+
+If polynomial is dense (most of the coefficients are non-zero):
+
+- use an array-based representation
+- index of a coefficient inside the array gives exponent of x
+
+```c
+typedef struct {
+  int CoeffArray[MaxDegree + 1]; // array of coefficients
+  int HighPower; // highest power of x with non-zero coefficient
+} *Polynomial;
+
+void ZeroPolynomial( Polynomial Poly ) {
+  int i;
+
+  // set all coefficients to 0 because the polynomial is 0
+  for (i = 0; i <= MaxDegree; i++) {
+    // MaxDegree is the maximum degree of the polynomial
+    // we set all coefficients to 0
+    Poly->CoeffArray[i] = 0;
+  }
+
+  // set the highest power of x with non-zero coefficient to 0
+  Poly->HighPower = 0;
+}
+
+void AddPolynomial( const Polynomial Poly1, const Polynomial Poly2, Polynomial PolySum ) {
+  int i;
+
+  ZeroPolynomial( PolySum ); // set all coefficients of the sum polynomial to 0
+
+  // add the coefficients of the two polynomials
+  PolySum->HighPower = Max( Poly1->HighPower, Poly2->HighPower ); // set the highest power of x with non-zero coefficient to the highest power of x with non-zero coefficient of the two polynomials
+  for (i = PolySum->HighPower; i >= 0; i--) {
+    // for each coefficient from the highest power of x with non-zero coefficient to 0
+    PolySum->CoeffArray[i] = Poly1->CoeffArray[i] + Poly2->CoeffArray[i]; // add the coefficients of the two polynomials
+  }
+}
+
+void MultPolynomial( const Polynomial Poly1, const Polynomial Poly2, Polynomial PolyProd ) {
+  int i, j;
+
+  ZeroPolynomial( PolyProd ); // set all coefficients of the product polynomial to 0
+
+  // multiply the coefficients of the two polynomials
+  PolyProd->HighPower = Poly1->HighPower + Poly2->HighPower; // set the highest power of x with non-zero coefficient to the sum of the highest powers of x with non-zero coefficients of the two polynomials
+  if (PolyProd->HighPower > MaxDegree) {
+    printf("Exceeded array size");
+  } else {
+    for (i = 0; i <= Poly1->HighPower; i++) {
+      // for each coefficient of the first polynomial
+      for (j = 0; j <= Poly2->HighPower; j++) {
+        // for each coefficient of the second polynomial
+        PolyProd->CoeffArray[i + j] += Poly1->CoeffArray[i] * Poly2->CoeffArray[j]; // multiply the coefficients of the two polynomials and add the result to the coefficient of the product polynomial
+      }
+    }
+  }
+}
+```
+
+If polynomials are not dense, implementation using arrays is inefficient.
+
+Example:
+p1(x) = 7x<sup>3</sup> + 4x<sup>55</sup> + 27x<sup>203</sup>
+p2(x) = 15x<sup>29</sup> + 9x<sup>137</sup> + 32x<sup>1004</sup>
+
+Array implementation of a non-dense polynomials requires large but very sparse arrays - inefficient!
+
+Each term of a polynomial is stored in a list node
+List nodes are sorted in order of decreasing exponents
+
+```c
+typedef struct Node *PtrToNode;
+
+struct Node {
+  int Coefficient;
+  int Exponent;
+  PtrToNode Next;
+};
+
+typedef PtrToNode Polynomial; // pointer to the first node of the list; nodes are sorted by exponent in decreasing order
+```
