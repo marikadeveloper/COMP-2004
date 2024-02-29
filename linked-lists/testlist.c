@@ -18,6 +18,7 @@ void PrintList(const List L)
   }
 }
 
+// O(N) time complexity
 int FindCycle(const List L)
 {
   Position slow, fast;
