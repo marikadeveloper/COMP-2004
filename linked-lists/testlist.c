@@ -18,6 +18,29 @@ void PrintList(const List L)
   }
 }
 
+int FindCycle(const List L)
+{
+  Position slow, fast;
+
+  slow = fast = First(L);
+
+  while (slow != NULL && fast != NULL)
+  {
+    slow = Advance(slow);
+    fast = Advance(fast);
+    if (fast != NULL)
+    {
+      // We need this to avoid segmentation fault
+      fast = Advance(fast);
+    }
+
+    if (slow == fast)
+      return 1;
+  }
+
+  return 0;
+}
+
 int main()
 {
   List L;
