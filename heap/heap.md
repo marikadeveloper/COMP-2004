@@ -27,3 +27,18 @@ Right child of node at index `i` is at index `2i + 1`.
 - Array at index 0 will contain a sentinel element (smallest possible value for a min-heap, largest possible value for a max-heap).
 - Assume heap means binary min-heap unless otherwise specified.
 - All keys are integers with no duplicates
+
+## Parent and child indices for a D-ary heap
+
+For a D-ary heap, the parent and child indices can be calculated as follows:
+
+- Right child of node at index `i` is at index `D * i + 1`.
+- Left child of node at index `i` is at index:
+  - `D * i + 1 - (d-1)`
+  - simplifies to `D * i + 1 - d + 1`
+  - simplifies to `D * (i - 1) + 2`
+- Parent of node at index `i` is at index:
+  - if i % d == 1 -> rightmost child
+    - `floor(i / D)`
+  - else
+    - `ceil(i / D)`

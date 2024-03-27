@@ -1,26 +1,30 @@
-#include "binheap.h"
+#include "binheap.c"
 #include <stdio.h>
 
 int main()
 {
-    PriorityQueue H = Initialize (50);
+  PriorityQueue H = Initialize(50);
 
-    Insert (13, H);
-    Insert (14, H);    
-    Insert (16, H);
-    Insert (24, H);
-    Insert (21, H);
-    Insert (19, H);
-    Insert (68, H);
-    Insert (65, H);
-    Insert (26, H);
-    Insert (32, H);
-    Insert (31, H);
-   
-    PrintHeap (H);
-    
-    printf("DeleteMin Returned: %d\n", DeleteMin(H));
-    PrintHeap(H);
-    
-    
+  Insert(10, H);
+  Insert(12, H);
+  Insert(1, H);
+  Insert(14, H);
+  Insert(6, H);
+  Insert(5, H);
+  Insert(8, H);
+  Insert(15, H);
+  Insert(3, H);
+  Insert(9, H);
+  Insert(7, H);
+  Insert(4, H);
+  Insert(11, H);
+  Insert(13, H);
+  Insert(2, H);
+
+  PrintHeap(H);
+
+  printf("DeleteMin Returned: %d\n", DeleteMin(H));
+  printf("DeleteMin Returned: %d\n", DeleteMin(H));
+  printf("DeleteMin Returned: %d\n", DeleteMin(H));
+  PrintHeap(H);
 }
